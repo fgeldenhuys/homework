@@ -6,6 +6,29 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    // Word column colors - these are dynamically applied from words.ts
+    // Column 1 - Purple
+    "bg-purple-300", "bg-purple-500", "border-purple-600",
+    // Column 2 - Blue
+    "bg-blue-300", "bg-blue-500", "border-blue-600",
+    // Column 3 - Yellow
+    "bg-yellow-300", "bg-yellow-400", "border-yellow-600",
+    // Column 4 - Cyan
+    "bg-cyan-300", "bg-cyan-500", "border-cyan-600",
+    // Column 5 - Pink
+    "bg-pink-300", "bg-pink-500", "border-pink-600",
+    // Column 6 - Sky
+    "bg-sky-200", "bg-sky-400", "border-sky-500",
+    // Column 7 - Violet
+    "bg-violet-200", "bg-violet-400", "border-violet-500",
+    // Column 8 - Orange
+    "bg-orange-200", "bg-orange-400", "border-orange-500",
+    // Column 9 - Green
+    "bg-green-200", "bg-green-400", "border-green-500",
+    // Column 10 - Red
+    "bg-red-200", "bg-red-400", "border-red-500",
+  ],
   theme: {
     extend: {
       fontFamily: {

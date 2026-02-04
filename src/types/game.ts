@@ -15,6 +15,7 @@ export interface GameConfig {
   cardCount: 3 | 4 | 5;
   roundsPerWord: number;
   totalUniqueWords: number;
+  enabledWords: string[];
 }
 
 export interface GameState {
