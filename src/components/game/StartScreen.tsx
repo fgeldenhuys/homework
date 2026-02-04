@@ -1,11 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import type { GameConfig } from "@/types/game";
 import { SIGHT_WORDS, WORD_COLUMNS } from "@/lib/words";
 
-const STORAGE_KEY = "sightwords-enabled-words";
+const STORAGE_KEY_WORDS = "sightwords-enabled-words";
+const STORAGE_KEY_CARD_COUNT = "sightwords-card-count";
+const STORAGE_KEY_ROUNDS_PER_WORD = "sightwords-rounds-per-word";
+const STORAGE_KEY_WORDS_PER_GAME = "sightwords-words-per-game";
+const STORAGE_KEY_USE_ALL_WORDS = "sightwords-use-all-words-distracters";
 
 interface StartScreenProps {
   onStartGame: (config: GameConfig) => void;
@@ -18,32 +22,130 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
   const [enabledWords, setEnabledWords] = useState<Set<string>>(
     new Set(SIGHT_WORDS)
   );
+  const [useAllWordsForDistracters, setUseAllWordsForDistracters] = useState(false);
+  const isInitialMount = useRef(true);
+  const skipInitialSaves = useRef({
+    cardCount: true,
+    roundsPerWord: true,
+    wordsPerGame: true,
+    useAllWordsForDistracters: true,
+  });
 
-  // Load saved word selection from localStorage on mount
+  // Load saved settings from localStorage on mount
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const words = JSON.parse(saved) as string[];
+      // Load word selection
+      const savedWords = localStorage.getItem(STORAGE_KEY_WORDS);
+      if (savedWords) {
+        const words = JSON.parse(savedWords) as string[];
         // Only use valid words from the saved list
         const validWords = words.filter((w) => SIGHT_WORDS.includes(w as typeof SIGHT_WORDS[number]));
         if (validWords.length > 0) {
           setEnabledWords(new Set(validWords));
         }
       }
+
+      // Load card count
+      const savedCardCount = localStorage.getItem(STORAGE_KEY_CARD_COUNT);
+      if (savedCardCount) {
+        const count = parseInt(savedCardCount, 10) as 3 | 4 | 5;
+        if ([3, 4, 5].includes(count)) {
+          setCardCount(count);
+        }
+      }
+
+      // Load rounds per word
+      const savedRoundsPerWord = localStorage.getItem(STORAGE_KEY_ROUNDS_PER_WORD);
+      if (savedRoundsPerWord) {
+        const rounds = parseInt(savedRoundsPerWord, 10);
+        if ([2, 3, 4].includes(rounds)) {
+          setRoundsPerWord(rounds);
+        }
+      }
+
+      // Load words per game
+      const savedWordsPerGame = localStorage.getItem(STORAGE_KEY_WORDS_PER_GAME);
+      if (savedWordsPerGame) {
+        const count = parseInt(savedWordsPerGame, 10);
+        if ([3, 5, 10].includes(count)) {
+          setWordsPerGame(count);
+        }
+      }
+
+      // Load use all words for distracters option
+      const savedUseAllWords = localStorage.getItem(STORAGE_KEY_USE_ALL_WORDS);
+      if (savedUseAllWords) {
+        setUseAllWordsForDistracters(JSON.parse(savedUseAllWords) as boolean);
+      }
     } catch {
       // Ignore localStorage errors (SSR, privacy mode, etc.)
     }
   }, []);
 
-  // Save word selection to localStorage when it changes
+  // Save word selection to localStorage when it changes (skip initial mount)
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(enabledWords)));
+      localStorage.setItem(STORAGE_KEY_WORDS, JSON.stringify(Array.from(enabledWords)));
     } catch {
       // Ignore localStorage errors
     }
   }, [enabledWords]);
+
+  // Save card count to localStorage when it changes (skip initial mount)
+  useEffect(() => {
+    if (skipInitialSaves.current.cardCount) {
+      skipInitialSaves.current.cardCount = false;
+      return;
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY_CARD_COUNT, cardCount.toString());
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, [cardCount]);
+
+  // Save rounds per word to localStorage when it changes (skip initial mount)
+  useEffect(() => {
+    if (skipInitialSaves.current.roundsPerWord) {
+      skipInitialSaves.current.roundsPerWord = false;
+      return;
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY_ROUNDS_PER_WORD, roundsPerWord.toString());
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, [roundsPerWord]);
+
+  // Save words per game to localStorage when it changes (skip initial mount)
+  useEffect(() => {
+    if (skipInitialSaves.current.wordsPerGame) {
+      skipInitialSaves.current.wordsPerGame = false;
+      return;
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY_WORDS_PER_GAME, wordsPerGame.toString());
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, [wordsPerGame]);
+
+  // Save use all words for distracters to localStorage when it changes (skip initial mount)
+  useEffect(() => {
+    if (skipInitialSaves.current.useAllWordsForDistracters) {
+      skipInitialSaves.current.useAllWordsForDistracters = false;
+      return;
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY_USE_ALL_WORDS, JSON.stringify(useAllWordsForDistracters));
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, [useAllWordsForDistracters]);
 
   const toggleWord = (word: string) => {
     setEnabledWords((prev) => {
@@ -82,8 +184,12 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
 
   const handleStart = () => {
     const enabledArray = Array.from(enabledWords);
-    if (enabledArray.length < cardCount) {
-      alert(`Please select at least ${cardCount} words to play!`);
+    const minWordsNeeded = useAllWordsForDistracters ? 1 : cardCount;
+    if (enabledArray.length < minWordsNeeded) {
+      const msg = useAllWordsForDistracters
+        ? "Please select at least 1 word to play!"
+        : `Please select at least ${cardCount} words to play!`;
+      alert(msg);
       return;
     }
     onStartGame({
@@ -91,10 +197,12 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
       roundsPerWord,
       totalUniqueWords: Math.min(wordsPerGame, enabledArray.length),
       enabledWords: enabledArray,
+      useAllWordsForDistracters,
     });
   };
 
   const enabledCount = enabledWords.size;
+  const minWordsNeeded = useAllWordsForDistracters ? 1 : cardCount;
 
   return (
     <motion.div
@@ -105,7 +213,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
     >
       {/* Title */}
       <motion.h1
-        className="text-4xl md:text-6xl font-simple-print text-blue-600 text-center mb-4"
+        className="text-5xl md:text-7xl font-simple-print font-bold text-blue-600 text-center mb-4"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 200 }}
@@ -121,7 +229,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
         transition={{ delay: 0.1 }}
       >
         <div className="flex justify-between items-center mb-3">
-          <p className="text-lg text-gray-600">
+          <p className="text-xl font-semibold text-gray-600">
             Select words to practice ({enabledCount} selected)
           </p>
           <div className="flex gap-2">
@@ -158,7 +266,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
                   <button
                     key={word}
                     onClick={() => toggleWord(word)}
-                    className={`py-2 px-1 text-base md:text-lg font-simple-print rounded-md transition-all text-white border-4 ${
+                    className={`py-2 px-1 text-lg md:text-xl font-simple-print font-bold rounded-md transition-all text-white border-4 ${
                       isEnabled
                         ? `${column.colorSelected} ${column.borderColor} shadow-md`
                         : `${column.color} border-transparent opacity-60`
@@ -180,10 +288,29 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
+        {/* Game options checkboxes */}
+        <div className="mb-6 pb-6 border-b-2 border-gray-200">
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="useAllWordsCheckbox"
+              checked={useAllWordsForDistracters}
+              onChange={(e) => setUseAllWordsForDistracters(e.target.checked)}
+              className="w-5 h-5 rounded cursor-pointer"
+            />
+            <label htmlFor="useAllWordsCheckbox" className="text-lg font-semibold text-gray-600 cursor-pointer">
+              Use any words as incorrect answers
+            </label>
+          </div>
+          <p className="text-sm text-gray-500 ml-8 mt-1">
+            When checked, incorrect answers can be any sight word. When unchecked, only selected words are shown.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Card count selector */}
           <div>
-            <p className="text-lg text-gray-600 mb-3 text-center">
+            <p className="text-xl font-semibold text-gray-600 mb-3 text-center">
               Cards shown?
             </p>
             <div className="flex justify-center gap-2">
@@ -191,7 +318,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
                 <button
                   key={num}
                   onClick={() => setCardCount(num)}
-                  className={`w-12 h-12 rounded-xl text-xl font-simple-print transition-all ${
+                  className={`w-12 h-12 rounded-xl text-2xl font-simple-print font-bold transition-all ${
                     cardCount === num
                       ? "bg-purple-500 text-white scale-110 shadow-lg"
                       : "bg-purple-100 text-purple-600 hover:bg-purple-200"
@@ -205,7 +332,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
 
           {/* Words per game selector */}
           <div>
-            <p className="text-lg text-gray-600 mb-3 text-center">
+            <p className="text-xl font-semibold text-gray-600 mb-3 text-center">
               Words per game?
             </p>
             <div className="flex justify-center gap-2">
@@ -213,7 +340,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
                 <button
                   key={num}
                   onClick={() => setWordsPerGame(num)}
-                  className={`w-12 h-12 rounded-xl text-xl font-simple-print transition-all ${
+                  className={`w-12 h-12 rounded-xl text-2xl font-simple-print font-bold transition-all ${
                     wordsPerGame === num
                       ? "bg-blue-500 text-white scale-110 shadow-lg"
                       : "bg-blue-100 text-blue-600 hover:bg-blue-200"
@@ -227,7 +354,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
 
           {/* Rounds per word selector */}
           <div>
-            <p className="text-lg text-gray-600 mb-3 text-center">
+            <p className="text-xl font-semibold text-gray-600 mb-3 text-center">
               Rounds per word?
             </p>
             <div className="flex justify-center gap-2">
@@ -235,7 +362,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
                 <button
                   key={num}
                   onClick={() => setRoundsPerWord(num)}
-                  className={`w-12 h-12 rounded-xl text-xl font-simple-print transition-all ${
+                  className={`w-12 h-12 rounded-xl text-2xl font-simple-print font-bold transition-all ${
                     roundsPerWord === num
                       ? "bg-green-500 text-white scale-110 shadow-lg"
                       : "bg-green-100 text-green-600 hover:bg-green-200"
@@ -251,18 +378,20 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
         {/* Start button */}
         <motion.button
           onClick={handleStart}
-          disabled={enabledCount < cardCount}
-          className={`w-full mt-6 py-4 text-white text-3xl font-simple-print rounded-xl shadow-lg transition-all ${
-            enabledCount >= cardCount
+          disabled={enabledCount < minWordsNeeded}
+          className={`w-full mt-6 py-4 text-white text-4xl font-simple-print font-bold rounded-xl shadow-lg transition-all ${
+            enabledCount >= minWordsNeeded
               ? "bg-gradient-to-r from-blue-500 to-purple-500 hover:shadow-xl"
               : "bg-gray-300 cursor-not-allowed"
           }`}
-          whileHover={enabledCount >= cardCount ? { scale: 1.02 } : {}}
-          whileTap={enabledCount >= cardCount ? { scale: 0.98 } : {}}
+          whileHover={enabledCount >= minWordsNeeded ? { scale: 1.02 } : {}}
+          whileTap={enabledCount >= minWordsNeeded ? { scale: 0.98 } : {}}
         >
-          {enabledCount >= cardCount
+          {enabledCount >= minWordsNeeded
             ? "Let's Play!"
-            : `Select ${cardCount - enabledCount} more words`}
+            : useAllWordsForDistracters
+              ? "Select 1 more word"
+              : `Select ${cardCount - enabledCount} more words`}
         </motion.button>
       </motion.div>
     </motion.div>

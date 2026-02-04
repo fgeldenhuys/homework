@@ -19,7 +19,7 @@ export function ScoreDisplay({ score, totalRounds }: ScoreDisplayProps) {
         {Array.from({ length: maxStars }).map((_, index) => (
           <motion.span
             key={index}
-            className={`text-3xl md:text-4xl ${
+            className={`text-4xl md:text-5xl ${
               index < starsToShow ? "text-yellow-400" : "text-gray-300"
             }`}
             initial={index < starsToShow ? { scale: 0 } : { scale: 1 }}
@@ -37,7 +37,7 @@ export function ScoreDisplay({ score, totalRounds }: ScoreDisplayProps) {
 
       {/* Numerical score */}
       <div className="bg-white rounded-xl px-4 py-2 shadow-md border-2 border-purple-300">
-        <span className="text-2xl md:text-3xl font-simple-print text-purple-600">
+        <span className="text-3xl md:text-4xl font-simple-print font-bold text-purple-600">
           {score}/{totalRounds}
         </span>
       </div>

@@ -24,6 +24,7 @@ const initialState: GameState = {
     roundsPerWord: 3,
     totalUniqueWords: 5,
     enabledWords: [...SIGHT_WORDS],
+    useAllWordsForDistracters: false,
   },
   lastSelectedWord: null,
   lastWasCorrect: null,
@@ -39,11 +40,12 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         Math.min(config.totalUniqueWords, config.enabledWords.length)
       );
       const firstWord = selectedWords[0];
-      // Use enabled words as the pool for distractors
+      // Use all words or just enabled words as the pool for distractors based on config
+      const distractorPool = config.useAllWordsForDistracters ? SIGHT_WORDS : config.enabledWords;
       const displayedWords = selectRoundWords(
         firstWord,
         config.cardCount,
-        config.enabledWords
+        distractorPool
       );
       const totalRounds = selectedWords.length * config.roundsPerWord;
 
@@ -132,10 +134,11 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
         // Move to next word - show the new word first
         const nextWord = selectedWords[nextWordIndex];
+        const distractorPool = config.useAllWordsForDistracters ? SIGHT_WORDS : config.enabledWords;
         const displayedWords = selectRoundWords(
           nextWord,
           config.cardCount,
-          config.enabledWords
+          distractorPool
         );
 
         return {
@@ -153,10 +156,11 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       }
 
       // Same word, new round with reshuffled cards - go directly to playing
+      const distractorPool = config.useAllWordsForDistracters ? SIGHT_WORDS : config.enabledWords;
       const displayedWords = selectRoundWords(
         state.currentTargetWord,
         config.cardCount,
-        config.enabledWords
+        distractorPool
       );
 
       return {

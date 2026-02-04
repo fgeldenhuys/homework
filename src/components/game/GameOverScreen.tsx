@@ -39,7 +39,7 @@ export function GameOverScreen({
     >
       {/* Celebration message */}
       <motion.h1
-        className="text-4xl md:text-6xl font-simple-print text-purple-600 text-center mb-6"
+        className="text-5xl md:text-7xl font-simple-print font-bold text-purple-600 text-center mb-6"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 200 }}
@@ -57,7 +57,7 @@ export function GameOverScreen({
         {Array.from({ length: 5 }).map((_, index) => (
           <motion.span
             key={index}
-            className={`text-5xl md:text-6xl ${
+            className={`text-6xl md:text-7xl ${
               index < stars ? "text-yellow-400" : "text-gray-300"
             }`}
             initial={{ scale: 0, rotate: -180 }}
@@ -78,20 +78,20 @@ export function GameOverScreen({
       >
         {/* Final score */}
         <div className="text-center mb-6">
-          <p className="text-2xl text-gray-600 mb-2">Your Score</p>
-          <p className="text-6xl font-simple-print text-green-600">
+          <p className="text-3xl font-semibold text-gray-600 mb-2">Your Score</p>
+          <p className="text-7xl font-simple-print font-bold text-green-600">
             {finalScore}/{totalRounds}
           </p>
         </div>
 
         {/* Words practiced */}
         <div className="text-center">
-          <p className="text-xl text-gray-600 mb-3">Words you practiced:</p>
+          <p className="text-2xl font-semibold text-gray-600 mb-3">Words you practiced:</p>
           <div className="flex flex-wrap justify-center gap-2">
             {wordsLearned.map((word, index) => (
               <motion.span
                 key={word}
-                className="px-4 py-2 bg-blue-100 text-blue-600 rounded-xl text-xl font-simple-print"
+                className="px-4 py-2 bg-blue-100 text-blue-600 rounded-xl text-2xl font-simple-print font-bold"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.7 + index * 0.1 }}
@@ -112,7 +112,7 @@ export function GameOverScreen({
       >
         <motion.button
           onClick={onPlayAgain}
-          className="px-8 py-4 bg-gradient-to-r from-green-500 to-teal-500 text-white text-2xl font-simple-print rounded-xl shadow-lg"
+          className="px-8 py-4 bg-gradient-to-r from-green-500 to-teal-500 text-white text-3xl font-simple-print font-bold rounded-xl shadow-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -120,7 +120,7 @@ export function GameOverScreen({
         </motion.button>
         <motion.button
           onClick={onReturnHome}
-          className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-2xl font-simple-print rounded-xl shadow-lg"
+          className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-3xl font-simple-print font-bold rounded-xl shadow-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

@@ -44,4 +44,4 @@ Word columns use dynamic Tailwind classes (e.g., `${column.colorSelected}`). The
 Uses "Simple Print" local font loaded in `src/app/layout.tsx` via CSS variable `--font-simple-print`.
 
 ### Configuration Persistence
-User configuration (e.g., word selection) is persisted to localStorage. When adding new config options that should survive between sessions, store them using the Web Storage API with a `sightwords-` prefixed key. See `StartScreen.tsx` for the pattern.
+User configuration (e.g., word selection) must be persisted to localStorage. When adding new config options that should survive between sessions, store them using the Web Storage API. See `StartScreen.tsx` for the pattern. Remember not to let the effect run before loading the existing config, or it will overwrite the previous selection.

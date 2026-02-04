@@ -16,6 +16,7 @@ export interface GameConfig {
   roundsPerWord: number;
   totalUniqueWords: number;
   enabledWords: string[];
+  useAllWordsForDistracters: boolean;
 }
 
 export interface GameState {

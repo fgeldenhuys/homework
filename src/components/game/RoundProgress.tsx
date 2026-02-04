@@ -78,7 +78,7 @@ export function RoundProgress({
       </div>
 
       {/* Text indicator */}
-      <div className="text-sm text-gray-600 font-simple-print">
+      <div className="text-base font-semibold text-gray-600 font-simple-print">
         Word {currentWordIndex + 1} of {totalWords}
       </div>
     </div>

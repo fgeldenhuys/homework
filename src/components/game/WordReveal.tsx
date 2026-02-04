@@ -22,11 +22,11 @@ export function WordReveal({ targetWord, onStart }: WordRevealProps) {
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 200, damping: 15 }}
       >
-        <p className="text-2xl md:text-3xl text-gray-500 mb-4">
+        <p className="text-3xl md:text-4xl font-semibold text-gray-500 mb-4">
           Find the word:
         </p>
         <motion.p
-          className="text-6xl md:text-8xl text-blue-600 font-simple-print mb-8"
+          className="text-7xl md:text-9xl text-blue-600 font-simple-print font-bold mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
@@ -37,7 +37,7 @@ export function WordReveal({ targetWord, onStart }: WordRevealProps) {
         {/* Start button */}
         <motion.button
           onClick={onStart}
-          className="px-10 py-4 bg-gradient-to-r from-green-500 to-teal-500 text-white text-3xl font-simple-print rounded-xl shadow-lg"
+          className="px-10 py-4 bg-gradient-to-r from-green-500 to-teal-500 text-white text-4xl font-simple-print font-bold rounded-xl shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -58,7 +58,7 @@ export function WordReveal({ targetWord, onStart }: WordRevealProps) {
         {["⭐", "✨", "🌟"].map((emoji, index) => (
           <motion.span
             key={index}
-            className="text-4xl"
+            className="text-5xl"
             animate={{ y: [0, -10, 0] }}
             transition={{
               repeat: Infinity,
