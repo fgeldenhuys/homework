@@ -8,7 +8,7 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center justify-center p-4">
       {/* Title */}
       <motion.h1
-        className="text-5xl md:text-7xl font-simple-print text-blue-600 text-center mb-4"
+        className="text-title text-blue-600 text-center mb-4"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 200 }}
@@ -17,7 +17,7 @@ export default function Home() {
       </motion.h1>
 
       <motion.p
-        className="text-2xl md:text-3xl text-gray-600 text-center mb-12"
+        className="text-subtitle text-gray-600 text-center mb-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -42,7 +42,7 @@ export default function Home() {
             <div className="flex items-center gap-6">
               <span className="text-6xl">📚</span>
               <div>
-                <h2 className="text-3xl md:text-4xl font-simple-print text-purple-600 mb-2">
+                <h2 className="text-heading text-purple-600 mb-2">
                   Sight Words
                 </h2>
                 <p className="text-xl text-gray-500">
@@ -62,7 +62,7 @@ export default function Home() {
           <div className="flex items-center gap-6">
             <span className="text-6xl">🔢</span>
             <div>
-              <h2 className="text-3xl md:text-4xl font-simple-print text-gray-400 mb-2">
+              <h2 className="text-heading text-gray-400 mb-2">
                 Numbers
               </h2>
               <p className="text-xl text-gray-400">Coming soon!</p>
@@ -78,7 +78,7 @@ export default function Home() {
           <div className="flex items-center gap-6">
             <span className="text-6xl">🎨</span>
             <div>
-              <h2 className="text-3xl md:text-4xl font-simple-print text-gray-400 mb-2">
+              <h2 className="text-heading text-gray-400 mb-2">
                 Colours
               </h2>
               <p className="text-xl text-gray-400">Coming soon!</p>

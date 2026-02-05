@@ -213,7 +213,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
     >
       {/* Title */}
       <motion.h1
-        className="text-5xl md:text-7xl font-simple-print font-bold text-blue-600 text-center mb-4"
+        className="text-title text-blue-600 text-center mb-4"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 200 }}
@@ -229,7 +229,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
         transition={{ delay: 0.1 }}
       >
         <div className="flex justify-between items-center mb-3">
-          <p className="text-xl font-semibold text-gray-600">
+          <p className="text-label text-gray-600">
             Select words to practice ({enabledCount} selected)
           </p>
           <div className="flex gap-2">
@@ -266,7 +266,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
                   <button
                     key={word}
                     onClick={() => toggleWord(word)}
-                    className={`py-2 px-1 text-lg md:text-xl font-simple-print font-bold rounded-md transition-all text-white border-4 ${
+                    className={`py-2 px-1 text-word-toggle rounded-md transition-all text-white border-4 ${
                       isEnabled
                         ? `${column.colorSelected} ${column.borderColor} shadow-md`
                         : `${column.color} border-transparent opacity-60`
@@ -310,7 +310,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Card count selector */}
           <div>
-            <p className="text-xl font-semibold text-gray-600 mb-3 text-center">
+            <p className="text-label text-gray-600 mb-3 text-center">
               Cards shown?
             </p>
             <div className="flex justify-center gap-2">
@@ -318,7 +318,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
                 <button
                   key={num}
                   onClick={() => setCardCount(num)}
-                  className={`w-12 h-12 rounded-xl text-2xl font-simple-print font-bold transition-all ${
+                  className={`w-12 h-12 rounded-xl text-selector transition-all ${
                     cardCount === num
                       ? "bg-purple-500 text-white scale-110 shadow-lg"
                       : "bg-purple-100 text-purple-600 hover:bg-purple-200"
@@ -332,7 +332,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
 
           {/* Words per game selector */}
           <div>
-            <p className="text-xl font-semibold text-gray-600 mb-3 text-center">
+            <p className="text-label text-gray-600 mb-3 text-center">
               Words per game?
             </p>
             <div className="flex justify-center gap-2">
@@ -340,7 +340,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
                 <button
                   key={num}
                   onClick={() => setWordsPerGame(num)}
-                  className={`w-12 h-12 rounded-xl text-2xl font-simple-print font-bold transition-all ${
+                  className={`w-12 h-12 rounded-xl text-selector transition-all ${
                     wordsPerGame === num
                       ? "bg-blue-500 text-white scale-110 shadow-lg"
                       : "bg-blue-100 text-blue-600 hover:bg-blue-200"
@@ -354,7 +354,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
 
           {/* Rounds per word selector */}
           <div>
-            <p className="text-xl font-semibold text-gray-600 mb-3 text-center">
+            <p className="text-label text-gray-600 mb-3 text-center">
               Rounds per word?
             </p>
             <div className="flex justify-center gap-2">
@@ -362,7 +362,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
                 <button
                   key={num}
                   onClick={() => setRoundsPerWord(num)}
-                  className={`w-12 h-12 rounded-xl text-2xl font-simple-print font-bold transition-all ${
+                  className={`w-12 h-12 rounded-xl text-selector transition-all ${
                     roundsPerWord === num
                       ? "bg-green-500 text-white scale-110 shadow-lg"
                       : "bg-green-100 text-green-600 hover:bg-green-200"
@@ -379,7 +379,7 @@ export function StartScreen({ onStartGame }: StartScreenProps) {
         <motion.button
           onClick={handleStart}
           disabled={enabledCount < minWordsNeeded}
-          className={`w-full mt-6 py-4 text-white text-4xl font-simple-print font-bold rounded-xl shadow-lg transition-all ${
+          className={`w-full mt-6 py-4 text-white text-cta rounded-xl shadow-lg transition-all ${
             enabledCount >= minWordsNeeded
               ? "bg-gradient-to-r from-blue-500 to-purple-500 hover:shadow-xl"
               : "bg-gray-300 cursor-not-allowed"

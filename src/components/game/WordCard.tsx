@@ -60,7 +60,7 @@ export function WordCard({
       className={cn(
         "relative px-8 py-6 bg-amber-50 rounded-xl",
         "shadow-lg border-4 border-amber-200",
-        "text-6xl md:text-7xl text-gray-800 font-bold",
+        "text-target text-gray-800",
         "cursor-pointer select-none",
         "focus:outline-none focus:ring-4 focus:ring-blue-400",
         "transition-colors duration-200",
@@ -86,7 +86,7 @@ export function WordCard({
       </div>
 
       {/* Word text */}
-      <span className="relative z-10 font-simple-print">{word}</span>
+      <span className="relative z-10">{word}</span>
 
       {/* Correct indicator glow */}
       {isSelected && wasCorrect === true && (

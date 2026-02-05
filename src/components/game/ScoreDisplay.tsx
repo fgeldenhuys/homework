@@ -37,7 +37,7 @@ export function ScoreDisplay({ score, totalRounds }: ScoreDisplayProps) {
 
       {/* Numerical score */}
       <div className="bg-white rounded-xl px-4 py-2 shadow-md border-2 border-purple-300">
-        <span className="text-3xl md:text-4xl font-simple-print font-bold text-purple-600">
+        <span className="text-score text-purple-600">
           {score}/{totalRounds}
         </span>
       </div>

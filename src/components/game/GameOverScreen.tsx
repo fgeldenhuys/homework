@@ -39,7 +39,7 @@ export function GameOverScreen({
     >
       {/* Celebration message */}
       <motion.h1
-        className="text-5xl md:text-7xl font-simple-print font-bold text-purple-600 text-center mb-6"
+        className="text-title text-purple-600 text-center mb-6"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 200 }}
@@ -91,7 +91,7 @@ export function GameOverScreen({
             {wordsLearned.map((word, index) => (
               <motion.span
                 key={word}
-                className="px-4 py-2 bg-blue-100 text-blue-600 rounded-xl text-2xl font-simple-print font-bold"
+                className="px-4 py-2 bg-blue-100 text-blue-600 rounded-xl text-selector"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.7 + index * 0.1 }}
@@ -112,7 +112,7 @@ export function GameOverScreen({
       >
         <motion.button
           onClick={onPlayAgain}
-          className="px-8 py-4 bg-gradient-to-r from-green-500 to-teal-500 text-white text-3xl font-simple-print font-bold rounded-xl shadow-lg"
+          className="px-8 py-4 bg-gradient-to-r from-green-500 to-teal-500 text-white text-cta-sm rounded-xl shadow-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -120,7 +120,7 @@ export function GameOverScreen({
         </motion.button>
         <motion.button
           onClick={onReturnHome}
-          className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-3xl font-simple-print font-bold rounded-xl shadow-lg"
+          className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-cta-sm rounded-xl shadow-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

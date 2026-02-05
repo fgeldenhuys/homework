@@ -12,3 +12,116 @@ body {
   background: linear-gradient(to bottom, #87ceeb, #b8e2f2);
   min-height: 100vh;
 }
+
+/* Semantic typography classes — single source of truth for font sizes and weights */
+@layer components {
+  /* Page-level titles (h1s on all main screens) */
+  .text-title {
+    @apply text-5xl font-bold;
+  }
+  @media (min-width: 768px) {
+    .text-title {
+      @apply text-7xl;
+    }
+  }
+
+  /* Page subtitles / supporting text */
+  .text-subtitle {
+    @apply text-2xl;
+  }
+  @media (min-width: 768px) {
+    .text-subtitle {
+      @apply text-3xl;
+    }
+  }
+
+  /* Section / card headings */
+  .text-heading {
+    @apply text-3xl;
+  }
+  @media (min-width: 768px) {
+    .text-heading {
+      @apply text-4xl;
+    }
+  }
+
+  /* Form/section labels (e.g., "Cards shown?", "Use any words...") */
+  .text-label {
+    @apply text-xl font-semibold;
+  }
+
+  /* "Find the word:" prompt label */
+  .text-prompt-label {
+    @apply text-3xl font-semibold;
+  }
+  @media (min-width: 768px) {
+    .text-prompt-label {
+      @apply text-4xl;
+    }
+  }
+
+  /* Target word — big reveal screen (WordReveal) */
+  .text-target-reveal {
+    @apply text-7xl font-bold;
+  }
+  @media (min-width: 768px) {
+    .text-target-reveal {
+      @apply text-9xl;
+    }
+  }
+
+  /* Target word — in-game prompt & word cards */
+  .text-target {
+    @apply text-6xl font-bold;
+  }
+  @media (min-width: 768px) {
+    .text-target {
+      @apply text-7xl;
+    }
+  }
+
+  /* Feedback overlay ("Great job!", "Try again!") */
+  .text-feedback {
+    @apply text-6xl font-bold;
+  }
+  @media (min-width: 768px) {
+    .text-feedback {
+      @apply text-8xl;
+    }
+  }
+
+  /* Primary CTA buttons */
+  .text-cta {
+    @apply text-4xl font-bold;
+  }
+
+  /* Secondary action buttons */
+  .text-cta-sm {
+    @apply text-3xl font-bold;
+  }
+
+  /* Live score number (N/M) */
+  .text-score {
+    @apply text-3xl font-bold;
+  }
+  @media (min-width: 768px) {
+    .text-score {
+      @apply text-4xl;
+    }
+  }
+
+  /* Word toggle buttons in selection grid */
+  .text-word-toggle {
+    @apply text-lg font-bold;
+  }
+  @media (min-width: 768px) {
+    .text-word-toggle {
+      @apply text-xl;
+    }
+  }
+
+  /* Number selector buttons & word chips */
+  .text-selector {
+    @apply text-2xl font-bold;
+  }
+}

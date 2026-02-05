@@ -24,7 +24,7 @@ export function FeedbackOverlay({ isVisible, isCorrect }: FeedbackOverlayProps) 
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className={`text-6xl md:text-8xl font-simple-print font-bold text-center px-8 py-4 rounded-2xl ${
+            className={`text-feedback text-center px-8 py-4 rounded-2xl ${
               isCorrect
                 ? "text-green-600 bg-green-100/90"
                 : "text-orange-600 bg-orange-100/90"
