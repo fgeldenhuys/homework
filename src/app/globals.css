@@ -72,11 +72,11 @@ body {
 
   /* Target word — in-game prompt & word cards */
   .text-target {
-    @apply text-6xl font-bold;
+    @apply text-7xl font-bold;
   }
   @media (min-width: 768px) {
     .text-target {
-      @apply text-7xl;
+      @apply text-8xl;
     }
   }
 
@@ -102,11 +102,11 @@ body {
 
   /* Live score number (N/M) */
   .text-score {
-    @apply text-3xl font-bold;
+    @apply text-4xl font-bold;
   }
   @media (min-width: 768px) {
     .text-score {
-      @apply text-4xl;
+      @apply text-5xl;
     }
   }
 

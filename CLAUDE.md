@@ -45,3 +45,11 @@ Uses "Simple Print" local font loaded in `src/app/layout.tsx` via CSS variable `
 
 ### Configuration Persistence
 User configuration (e.g., word selection) must be persisted to localStorage. When adding new config options that should survive between sessions, store them using the Web Storage API. See `StartScreen.tsx` for the pattern. Remember not to let the effect run before loading the existing config, or it will overwrite the previous selection.
+
+
+## Issue Tracking
+
+This project uses **bd (beads)** for issue tracking.
+It is important to create and update beads for all changes made.
+When I ask you to make changes, it is implied that you need to create and update beads accordingly.
+AGENTS.md has more information.

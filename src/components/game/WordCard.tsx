@@ -58,7 +58,7 @@ export function WordCard({
   return (
     <motion.button
       className={cn(
-        "relative px-8 py-6 bg-amber-50 rounded-xl",
+        "relative px-10 py-8 bg-amber-50 rounded-xl",
         "shadow-lg border-4 border-amber-200",
         "text-target text-gray-800",
         "cursor-pointer select-none",
