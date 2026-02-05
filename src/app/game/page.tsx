@@ -106,6 +106,12 @@ export default function GamePage() {
                   totalRounds={state.totalRounds}
                   roundsPerWord={state.roundsPerWord}
                 />
+                <button
+                  onClick={actions.resetGame}
+                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg transition-colors"
+                >
+                  Stop
+                </button>
               </header>
 
               <WordReveal
@@ -130,6 +136,12 @@ export default function GamePage() {
                   totalRounds={state.totalRounds}
                   roundsPerWord={state.roundsPerWord}
                 />
+                <button
+                  onClick={actions.resetGame}
+                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg transition-colors"
+                >
+                  Stop
+                </button>
               </header>
 
               {/* Game board */}
